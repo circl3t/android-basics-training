@@ -1,4 +1,5 @@
 # Globule App
+This is for the moment just brainstorming
 
 ## Summary
 With Globule you can:
