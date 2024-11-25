@@ -15,7 +15,7 @@ sealed class Route(val asString: String) {
 
   object Login : Route("Login")
 
-  object Country: Route("Country")
+  object Country : Route("Country")
 }
 
 class NavigationManager(private val navController: NavHostController) {
@@ -33,9 +33,7 @@ class NavigationManager(private val navController: NavHostController) {
   }
 
   fun navigateTo(routeString: String) {
-    navController.navigate(routeString) {
-
-    }
+    navController.navigate(routeString) {}
   }
 
   fun goBack() {

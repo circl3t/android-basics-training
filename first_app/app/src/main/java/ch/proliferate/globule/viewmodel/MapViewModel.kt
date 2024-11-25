@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 data class MapUIState(
-  val isLoading: Boolean,
-  val polygons: List<List<com.google.android.gms.maps.model.LatLng>> = emptyList(),
-  val selectedCountryName: String = "",
-  val highlighted: Boolean = true
+    val isLoading: Boolean,
+    val polygons: List<List<com.google.android.gms.maps.model.LatLng>> = emptyList(),
+    val selectedCountryName: String = "",
+    val highlighted: Boolean = true
 )
 
 @HiltViewModel
@@ -23,6 +23,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
   fun finishLoading() {
     _uiState.value = _uiState.value.copy(isLoading = false)
   }
+
   fun updatePolygons(polygons: List<List<LatLng>>) {
     _uiState.value = _uiState.value.copy(polygons = polygons)
   }

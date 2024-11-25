@@ -9,6 +9,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("com.ncorti.ktfmt.gradle") version "0.17.0"
+    id("org.sonarqube") version "6.0.0.5145"
 }
 
 android {
@@ -105,4 +106,47 @@ dependencies {
 
 kapt {
     correctErrorTypes = true
+}
+
+tasks.register("jacocoTestReport", JacocoReport::class) {
+    mustRunAfter("testDebugUnitTest", "connectedDebugAndroidTest")
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    val fileFilter = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
+        "**/*Hilt*.*",  // Exclude Hilt generated code
+        "hilt_aggregated_deps/**",  // Exclude Hilt generated code
+        "**/*_Factory.class",  // Exclude Hilt generated code
+        "**/*_MembersInjector.class",  // Exclude Hilt generated code
+    )
+    val debugTree = fileTree("${project.layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+    val mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files(mainSrc))
+    classDirectories.setFrom(files(debugTree))
+    executionData.setFrom(fileTree(project.layout.buildDirectory.get()) {
+        include("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
+        include("outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec")
+    })
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "circl3t_android-basics-training")
+        property("sonar.organization", "circl3t")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
+        //property("sonar.coverage.exclusions", "src/main/java/ch/proliferate/globule/ui/**/*")
+    }
 }

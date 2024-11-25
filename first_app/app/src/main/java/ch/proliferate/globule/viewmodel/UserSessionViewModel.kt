@@ -10,28 +10,28 @@ import ch.proliferate.globule.ui.navigation.Route
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 data class UserSessionState(val userLoggedIn: Boolean, val userName: String)
 
 @HiltViewModel
-class UserSessionViewModel @Inject constructor(private val userPreferences: UserPreferences) : ViewModel() {
+class UserSessionViewModel @Inject constructor(private val userPreferences: UserPreferences) :
+    ViewModel() {
 
-  private var _userSessionState = MutableStateFlow(UserSessionState(userLoggedIn = userPreferences.userLoggedIn, userName = userPreferences.userName ?: ""))
+  private var _userSessionState =
+      MutableStateFlow(
+          UserSessionState(
+              userLoggedIn = userPreferences.userLoggedIn,
+              userName = userPreferences.userName ?: ""))
   val userSessionState: StateFlow<UserSessionState> = _userSessionState.asStateFlow()
 
   fun getSignInIntent(): Intent {
-    val providers = listOf(
-      AuthUI.IdpConfig.GoogleBuilder().build()
-    )
-    return AuthUI.getInstance()
-      .createSignInIntentBuilder()
-      .setAvailableProviders(providers)
-      .build()
+    val providers = listOf(AuthUI.IdpConfig.GoogleBuilder().build())
+    return AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build()
   }
 
   fun getStartDestination(): String {
@@ -56,7 +56,8 @@ class UserSessionViewModel @Inject constructor(private val userPreferences: User
     viewModelScope.launch {
       userPreferences.userLoggedIn = true
       userPreferences.userName = userName
-      _userSessionState.value = _userSessionState.value.copy(userLoggedIn = true, userName = userName)
+      _userSessionState.value =
+          _userSessionState.value.copy(userLoggedIn = true, userName = userName)
     }
   }
 
@@ -67,5 +68,4 @@ class UserSessionViewModel @Inject constructor(private val userPreferences: User
       _userSessionState.value = _userSessionState.value.copy(userLoggedIn = false, userName = "")
     }
   }
-
 }
