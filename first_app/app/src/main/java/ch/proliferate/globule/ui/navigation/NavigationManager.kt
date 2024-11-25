@@ -3,6 +3,7 @@ package ch.proliferate.globule.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import ch.proliferate.globule.model.CountryPolygons
+import ch.proliferate.globule.ui.screens.CountryScreen
 import ch.proliferate.globule.ui.screens.LoginScreen
 import ch.proliferate.globule.ui.screens.MapScreen
 import ch.proliferate.globule.ui.screens.ProfileScreen
@@ -13,6 +14,8 @@ sealed class Route(val asString: String) {
   object Profile : Route("Profile")
 
   object Login : Route("Login")
+
+  object Country: Route("Country")
 }
 
 class NavigationManager(private val navController: NavHostController) {
@@ -25,7 +28,18 @@ class NavigationManager(private val navController: NavHostController) {
               navManager = this, isDataLoaded = isDataLoaded, countryPolygons = countryPolygons)
       is Route.Profile -> ProfileScreen()
       is Route.Login -> LoginScreen(this)
+      is Route.Country -> CountryScreen(this)
     }
+  }
+
+  fun navigateTo(routeString: String) {
+    navController.navigate(routeString) {
+
+    }
+  }
+
+  fun goBack() {
+    navController.popBackStack()
   }
 
   fun signOut() {

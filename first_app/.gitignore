@@ -16,4 +16,4 @@ local.properties
 
 # IntelliJ IDEA files
 .idea/
-
+./app/google-services.json

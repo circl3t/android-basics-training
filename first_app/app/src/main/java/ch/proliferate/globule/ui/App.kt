@@ -19,12 +19,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ch.proliferate.globule.model.CountryPolygons
 import ch.proliferate.globule.ui.navigation.NavigationManager
-import ch.proliferate.globule.viewmodel.AppViewModel
+import ch.proliferate.globule.viewmodel.UserSessionViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun App() {
-  val viewModel: AppViewModel = hiltViewModel()
+  val viewModel: UserSessionViewModel = hiltViewModel()
   val navController: NavHostController = rememberNavController()
   val navManager: NavigationManager = NavigationManager(navController)
   val context = LocalContext.current

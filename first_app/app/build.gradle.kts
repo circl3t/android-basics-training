@@ -98,6 +98,9 @@ dependencies {
     // Shapes
     implementation("androidx.graphics:graphics-shapes:1.0.0-rc01")
 
+    // Firebase UI Auth
+    implementation("com.firebaseui:firebase-ui-auth:7.2.0")
+
 }
 
 kapt {
