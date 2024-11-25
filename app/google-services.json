@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "475175719437",
+    "project_id": "globule-a3c4f",
+    "storage_bucket": "globule-a3c4f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475175719437:android:44bc6b0dceff7ed6f1bb44",
+        "android_client_info": {
+          "package_name": "ch.proliferate.globule"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475175719437-07pdu0v5cfupoejhqjshnn4sr87iv7kl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ch.proliferate.globule",
+            "certificate_hash": "e2fae1a96105cef16370713b29f049c3d892133b"
+          }
+        },
+        {
+          "client_id": "475175719437-14uivlm9nj48a77p67oldr9qsmtnf0i9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6aCN75pjCA8jcebYib0CawLQGDb91PSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475175719437-14uivlm9nj48a77p67oldr9qsmtnf0i9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
