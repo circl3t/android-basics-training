@@ -28,7 +28,6 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 
   LaunchedEffect(Unit) {
     launch { radiusWeight.animateTo(targetValue = 1.0f, animationSpec = springSpec()) }
-
     launch { rotationAngle.animateTo(targetValue = 360.0f, animationSpec = springSpec()) }
     launch { fillColorAlpha.animateTo(targetValue = 0.1f, animationSpec = springSpec()) }
   }

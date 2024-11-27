@@ -102,6 +102,12 @@ dependencies {
     // Firebase UI Auth
     implementation("com.firebaseui:firebase-ui-auth:7.2.0")
 
+    // Streaming JSON parser
+    implementation("com.google.code.gson:gson:2.11.0")
+
+    // Image loading library
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
 }
 
 kapt {

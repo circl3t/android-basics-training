@@ -5,7 +5,8 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ch.proliferate.globule.model.UserPreferences
+import ch.proliferate.globule.data.UserPreferences
+import ch.proliferate.globule.data.repository.CountryRepository
 import ch.proliferate.globule.ui.navigation.Route
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -16,18 +17,38 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-data class UserSessionState(val userLoggedIn: Boolean, val userName: String)
+data class UserSessionState(
+    val userLoggedIn: Boolean,
+    val userName: String,
+    val isDataLoaded: Boolean
+)
 
 @HiltViewModel
-class UserSessionViewModel @Inject constructor(private val userPreferences: UserPreferences) :
-    ViewModel() {
+class UserSessionViewModel
+@Inject
+constructor(
+    private val userPreferences: UserPreferences,
+    private val countryRepository: CountryRepository
+) : ViewModel() {
 
   private var _userSessionState =
       MutableStateFlow(
           UserSessionState(
               userLoggedIn = userPreferences.userLoggedIn,
-              userName = userPreferences.userName ?: ""))
+              userName = userPreferences.userName ?: "",
+              isDataLoaded = false))
   val userSessionState: StateFlow<UserSessionState> = _userSessionState.asStateFlow()
+
+  init {
+    loadData()
+  }
+
+  private fun loadData() {
+    viewModelScope.launch {
+      countryRepository.loadData()
+      _userSessionState.value = _userSessionState.value.copy(isDataLoaded = true)
+    }
+  }
 
   fun getSignInIntent(): Intent {
     val providers = listOf(AuthUI.IdpConfig.GoogleBuilder().build())

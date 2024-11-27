@@ -1,4 +1,4 @@
-package ch.proliferate.globule.model
+package ch.proliferate.globule.data
 
 import android.content.Context
 import android.content.SharedPreferences

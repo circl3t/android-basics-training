@@ -2,13 +2,14 @@ package ch.proliferate.globule.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import ch.proliferate.globule.model.CountryPolygons
 import ch.proliferate.globule.ui.screens.CountryScreen
 import ch.proliferate.globule.ui.screens.LoginScreen
 import ch.proliferate.globule.ui.screens.MapScreen
 import ch.proliferate.globule.ui.screens.ProfileScreen
+import ch.proliferate.globule.viewmodel.SharedViewModel
 
 sealed class Route(val asString: String) {
+
   object Main : Route("Main")
 
   object Profile : Route("Profile")
@@ -21,14 +22,12 @@ sealed class Route(val asString: String) {
 class NavigationManager(private val navController: NavHostController) {
 
   @Composable
-  fun ScreenFromRoute(route: Route, isDataLoaded: Boolean, countryPolygons: CountryPolygons) {
+  fun ScreenFromRoute(route: Route, sharedViewModel: SharedViewModel) {
     when (route) {
-      is Route.Main ->
-          MapScreen(
-              navManager = this, isDataLoaded = isDataLoaded, countryPolygons = countryPolygons)
+      is Route.Main -> MapScreen(this, sharedViewModel)
       is Route.Profile -> ProfileScreen()
       is Route.Login -> LoginScreen(this)
-      is Route.Country -> CountryScreen(this)
+      is Route.Country -> CountryScreen(this, sharedViewModel)
     }
   }
 
